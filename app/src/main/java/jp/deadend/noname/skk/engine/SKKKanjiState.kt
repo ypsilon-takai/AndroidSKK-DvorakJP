@@ -15,7 +15,7 @@ object SKKKanjiState : SKKState {
         // シフトキーの状態をチェック
         val isUpper = Character.isUpperCase(pcode)
         // 大文字なら，ローマ字変換のために小文字に戻す
-        val pcodeLower = if (isUpper) Character.toLowerCase(pcode) else pcode
+        var pcodeLower = if (isUpper) Character.toLowerCase(pcode) else pcode
 
         val composing = context.mComposing
         val kanjiKey = context.mKanjiKey
@@ -50,6 +50,11 @@ object SKKKanjiState : SKKState {
             // 最初の平仮名はついシフトキーを押しっぱなしにしてしまうた
             // め、kanjiKeyの長さをチェックkanjiKeyの長さが0の時はシフトが
             // 押されていなかったことにして下方へ継続させる
+
+            // DvorakJP: 送り仮名先頭のcを強制的にkに書き換え
+            if (pcodeLower == 'c'.code) {
+                pcodeLower = 'k'.code
+            }
             kanjiKey.append(pcodeLower.toChar()) //送りありの場合子音文字追加
             composing.setLength(0)
             if (isVowel(pcodeLower)) { // 母音なら送り仮名決定，変換
