@@ -157,7 +157,9 @@ object RomajiConverter {
 
         // 特殊文字
         "z," to "‥", "z-" to "〜", "z." to "…", "z/" to "・", "z[" to "『",
-        "z]" to "』", "zh" to "←", "zj" to "↓", "zk" to "↑", "zl" to "→"
+        "z]" to "』"
+        // 矢印系は zh* じゃ、じゅ、じょとかぶるので抑止
+        // , "zh" to "←", "zj" to "↓", "zk" to "↑", "zl" to "→"
     )
 
     private val mConsonantMap = mapOf(
